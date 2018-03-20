@@ -1,62 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+	<meta charset="UTF-8">
+	<title></title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/site.css"/>
 </head>
 <body ng-app="pokedex">
-<div class="container py-3">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center mb-3">PokéSir</h2>
-            <hr class="mb-5">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <!-- form Search -->
-                    <div class="card card-outline-secondary" ng-controller="poke">
-                        <div class="card-header">
-                            <h3 class="mb-0">Search</h3>
-                        </div>
-                        <div class="card-body">
-                            <form class="form" role="form" autocomplete="off">
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">ID</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" ng-model="id">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" ng-model="pokename">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">List</label>
-                                    <div class="col-lg-9">
-                                        <select class="custom-select" size="10" ng-model="pokename">
-                                            <option value="" selected hidden />
-                                            <option ng-repeat="pokemon in pokemonslist | filter:pokename">{{pokemon.name}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-9">
-                                        <input type="button" class="btn btn-primary" value="Go" ng-click="$log.warn(pokename)">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /form Search -->
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container py-3">
+		<div class="row">
+			<div class="col-md-4">
+				<!-- form Search -->
+				<div class="card card-outline-secondary" ng-controller="poke">
+					<div class="card-header">
+						<h3 class="mb-0">PokéSir</h3>
+					</div>
+					<div class="card-body">
+						<form class="form" role="form" autocomplete="off">
+							<!--div class="form-group row">
+								<div class="col-lg-12">
+									<label for="name">Id</label>
+
+									<input id="id" class="form-control" type="text">
+								</div>
+							</div-->
+							<div class="form-group row">
+								<div class="col-lg-12">
+									<label for="name">Name</label>
+									<input id="name" class="form-control" type="text" ng-model="selectedPokemon" required>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-12">
+									<select class="custom-select" size="13" ng-model="selectedPokemon">
+										<option value="" selected hidden />
+										<option ng-repeat="pokemon in pokemonslist | filter:selectedPokemon">{{pokemon.name}}</option>
+									</select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary" ng-click="update(selectedPokemon)">Go</button>
+						</form>
+					</div>
+				</div>
+				<!-- /form Search -->
+			</div>
+			<div class="col-md-8">
+				<div class="card card-outline-secondary" ng-controller="details">
+					<div class="card-header">
+						<h3 class="mb-0">{{name}}</h3>
+					</div>
+					<div class="card-body">
+						<div class="row mb-3">
+							<div class="col-lg-3">
+								<img src="{{img}}" alt="" class="img-thumbnail poke-img">
+							</div>
+							<div class="col-lg-9">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">Height</th>
+											<th scope="col">Weight</th>
+											<th scope="col">Base Exp</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{height}} m</td>
+											<td>{{weight}} kg</td>
+											<td>{{exp}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-lg-3">
+								<b>Types :</b>
+							</div>
+							<div class="col-lg-9">
+								<div class="type mr-3" ng-repeat="t in types"><img src="./img/{{t.type.name}}.png" alt="{{t.type.name}}" class="img-thumbnail">
+								</div>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-lg-12">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col"></th>
+											<th ng-repeat="s in stats" scope="col">{{s.stat.name}}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th>Base stat</th>
+											<td ng-repeat="s in stats">{{s.base_stat}}</td>
+										</tr>
+										<tr>
+											<th>Effort</th>
+											<td ng-repeat="s in stats">{{s.effort}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-lg-6">
+								<label for="abilities"><b>Abilities :</b></label>
+								<ul id="abilities" class="list-group">
+									<li ng-repeat="a in abilities" class="list-group-item">{{a.ability.name}}</li>
+								</ul>
+							</div>
+							<div class="col-lg-6">
+								<label for="moves"><b>Moves :</b></label>
+								<select id="moves" class="custom-select" size="5">
+									<option value="" selected hidden />
+									<option ng-repeat="m in moves">{{m.move.name}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Dependencies -->
