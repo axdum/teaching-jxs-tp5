@@ -40,7 +40,7 @@ pokeApp.controller('poke', function ($scope, $log, $http, getPokeInfosByName, ge
         $scope.pokemon = getPokeInfosByName.get({name: $scope.selectedPokemon}, function () {
             SharedService.pokemon = $scope.pokemon;
             $scope.desc = getPokeDescById.get({id: $scope.pokemon.id}, function () {
-                SharedService.desc = $scope.desc;
+                SharedService.desc = $scope.desc.descriptions[1].description;
             })
         });
     }
@@ -90,7 +90,7 @@ pokeApp.controller('details', function ($scope, $log, SharedService) {
     $scope.$watch('SharedService.desc', function (newDesc) {
         if (newDesc != '') {
             // 0 : fr, 1 : en
-            $scope.description = newDesc.descriptions[1].description;
+            $scope.description = newDesc;
             $log.log('Desc chargée !');
         }
     });
