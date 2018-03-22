@@ -89,7 +89,6 @@ pokeApp.controller('details', function ($scope, $log, SharedService) {
 
     $scope.$watch('SharedService.desc', function (newDesc) {
         if (newDesc != '') {
-            // 0 : fr, 1 : en
             $scope.description = newDesc;
             $log.log('Desc chargée !');
         }
