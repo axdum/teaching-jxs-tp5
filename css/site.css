@@ -1,0 +1,19 @@
+body {
+	background-image: url('../img/bg.png');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+h3::first-letter{
+	text-transform: uppercase;
+}
+
+.type {
+	float: left;
+}
+
+.poke-img{
+	height: 96px;
+	width: 96px;
+	object-fit: cover;
+}
