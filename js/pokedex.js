@@ -91,7 +91,7 @@ pokeApp.controller('details', function ($scope, $log, SharedService) {
         if (newDesc != '') {
             // 0 : fr, 1 : en
             $scope.description = newDesc.descriptions[1].description;
-            $log.log('Desc de ' + newDesc.name + ' chargés !');
+            $log.log('Desc chargée !');
         }
     });
 });
